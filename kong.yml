@@ -1,0 +1,40 @@
+_format_version: "2.1"
+
+consumers:
+  - username: estudiante
+
+jwt_secrets:
+  - consumer: estudiante
+    key: estudiante
+    secret: mi_clave_super_secreta
+    algorithm: HS256
+
+services:
+  - name: solicitud-service
+    url: http://host.docker.internal:3000
+    routes:
+      - name: solicitudes-route
+        paths:
+          - /solicitudes
+        methods:
+          - GET
+          - POST
+
+plugins:
+  - name: jwt
+    service: solicitud-service
+    config:
+      uri_param_names: []
+      claims_to_verify:
+        - exp
+      key_claim_name: iss
+
+  - name: rate-limiting
+    service: solicitud-service
+    config:
+      policy: local
+      minute: 100
+      limit_by: consumer
+
+
+

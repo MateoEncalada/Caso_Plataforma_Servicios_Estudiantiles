@@ -1,13 +1,25 @@
-// src/controllers/solicitudController.js
+const {
+  crearSolicitud,
+  obtenerSolicitud
+} = require('../services/solicitudService');
 
-// Por ahora mocks sencillos, luego añadiremos lógica real
 exports.createSolicitud = async (req, res) => {
-  // Aquí se orquesta: academicClient, soapClient, etc.
-  return res.status(201).json({ id: '1234', estado: 'procesado' });
+  try {
+    const result = await crearSolicitud(req.body);
+    return res.status(201).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
 };
 
 exports.getSolicitud = async (req, res) => {
-  const { id } = req.params;
-  // Consulta de estado (mock)
-  return res.json({ id, estado: 'en revisión' });
+  try {
+    const result = await obtenerSolicitud(req.params.id);
+    return res.json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
 };
+
