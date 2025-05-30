@@ -6,7 +6,7 @@ const { validarEstudiante } = require('./academicClient');
 const breakerOptions = {
   timeout: 10000,               // 10s de timeout
   errorThresholdPercentage: 50, // abre si >50% de fallas
-  resetTimeout: 300000,         // 5min hasta reintentar
+  resetTimeout: 10000,         // 5min hasta reintentar
   rollingCountTimeout: 60000,   // ventana de 60s
   rollingCountBuckets: 6        // subdividida en 6 buckets
 };
