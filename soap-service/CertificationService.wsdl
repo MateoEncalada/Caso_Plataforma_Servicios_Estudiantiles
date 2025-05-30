@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="CertificationService"
+  targetNamespace="http://universidad.edu/wsdl"
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:tns="http://universidad.edu/wsdl"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <types>
+    <xsd:schema targetNamespace="http://universidad.edu/wsdl">
+      <xsd:element name="RegisterCertificateRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="cedula"  type="xsd:string"/>
+            <xsd:element name="tipo"    type="xsd:string"/>
+            <xsd:element name="detalle" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RegisterCertificateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+
+  <message name="RegisterCertificateRequest">
+    <part name="parameters" element="tns:RegisterCertificateRequest"/>
+  </message>
+  <message name="RegisterCertificateResponse">
+    <part name="parameters" element="tns:RegisterCertificateResponse"/>
+  </message>
+
+  <portType name="CertificationPortType">
+    <operation name="RegisterCertificate">
+      <input  message="tns:RegisterCertificateRequest"/>
+      <output message="tns:RegisterCertificateResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="CertificationSoapBinding" type="tns:CertificationPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="RegisterCertificate">
+      <soap:operation soapAction="http://universidad.edu/RegisterCertificate"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+
+  <service name="CertificationService">
+    <port name="CertificationPort" binding="tns:CertificationSoapBinding">
+      <soap:address location="http://localhost:5000/CertificationService"/>
+    </port>
+  </service>
+</definitions>
